@@ -14,8 +14,17 @@
 				title: 'Hello'
 			}
 		},
+		created() {
+			console.log("我是created")
+		},
+		mounted() {
+			console.log("我是mounted")
+		},
 		onLoad() {
-			
+			console.log("我是load")
+		},
+		onShow() {
+			console.log("我是onshow")
 		},
 		methods: {
 

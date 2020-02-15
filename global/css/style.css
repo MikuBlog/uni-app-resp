@@ -1,0 +1,11 @@
+.primary-text-button {
+	color: #007aff!important;
+}
+.default-text-button {
+	color: #8d8d8d!important;
+}
+button {
+	font-size: 28rpx;
+	padding: 10rpx 0;
+	background: #fefefe;
+}

@@ -5,18 +5,19 @@
  * @param {Any} data 
  */
 function setMemoryPmt(key, data) {
-    uni.setStorageSync(key, JSON.stringify(data))
+	uni.setStorageSync(key, data)
 }
+
 function getMemoryPmt(key) {
-    return JSON.parse(uni.getStorageSync(key))
+	return uni.getStorageSync(key)
 }
 
 function clearMemoryPmt() {
-    uni.clearStorageSync()
+	uni.clearStorageSync()
 }
 
 export default {
-    setMemoryPmt,
-    getMemoryPmt,
-    clearMemoryPmt
+	setMemoryPmt,
+	getMemoryPmt,
+	clearMemoryPmt
 }

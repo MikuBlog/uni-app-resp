@@ -1,0 +1,1 @@
+export const baseUrl = "http://xuanzai.vipgz4.idcfengye.com"
