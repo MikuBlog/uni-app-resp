@@ -25,8 +25,9 @@ function addInterceptors(obj) {
 			// 统一对中文字符编码
 			config.url = encodeURI(config.url)
 			uni.getStorageSync('token')
-			&& (!new RegExp(/\/auth\/login/g).test(config.url) || !new RegExp(/\/auth\/loginWx/g).test(config.url))
-			&&(config.headers.Authorization = `Bearer ${uni.getStorageSync('token')}`)
+			&& (config.headers.Authorization = `Bearer ${uni.getStorageSync('token')}`)
+			&& (new RegExp(/\/auth\/login/g).test(config.url) || new RegExp(/\/auth\/loginWx/g).test(config.url) || new RegExp(/\/auth\/loginPh/g).test(config.url))
+			&& (config.headers.Authorization = "")
 			uni.showLoading({
 			    title: '加载中',
 					mask: true

@@ -35,7 +35,29 @@ const showToast = function({
 	})
 }
 
+const showLoading = function({
+	title,
+	mask,
+	success,
+	fail,
+	complete
+}) {
+	uni.showLoading({
+		title: title || "",
+		mask: mask || true,
+		success: success || (() => {}),
+		fail: fail || (() => {}),
+		complete: complete || (() => {})
+	})
+}
+
+const hideLoading = function() {
+	uni.hideLoading()
+}
+
 export default {
 	showModal,
-	showToast
+	showToast,
+	showLoading,
+	hideLoading
 }

@@ -1,6 +1,6 @@
 {
   "dependencies": {
     "axios": "^0.19.0",
-    "font-awesome": "^4.7.0"
+    "jsencrypt": "^3.0.0-rc.1"
   }
 }

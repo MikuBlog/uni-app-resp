@@ -1,61 +1,13 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+	<view class="content"></view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		created() {
-			console.log("我是created")
-		},
-		mounted() {
-			console.log("我是mounted")
-		},
-		onLoad() {
-			console.log("我是load")
-		},
-		onShow() {
-			console.log("我是onshow")
-		},
-		methods: {
-
-		}
-	}
+import Operation from './js/operation.js'
+import Property from './js/property.js'
+export default {
+	mixins: [ Operation, Property ]
+};
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
-</style>
+<style lang="scss" scoped src="./scss/index.scss"></style>

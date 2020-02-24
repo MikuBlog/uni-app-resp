@@ -18,6 +18,8 @@ import Modal from '@/api/modal'
 
 Vue.prototype.$showModal = Modal.showModal
 Vue.prototype.$showToast = Modal.showToast
+Vue.prototype.$showLoading = Modal.showLoading
+Vue.prototype.$hideLoading = Modal.hideLoading
 
 // 引入navigate
 import Navigate from '@/api/navigate'
@@ -25,3 +27,12 @@ import Navigate from '@/api/navigate'
 Vue.prototype.$navigateTo = Navigate.navigateTo
 Vue.prototype.$navigateBack = Navigate.navigateBack
 Vue.prototype.$switchTab = Navigate.switchTab
+Vue.prototype.$redirectTo = Navigate.redirectTo
+Vue.prototype.$reLaunch = Navigate.reLaunch
+
+// 引入date
+import date from '@/api/date'
+
+Vue.prototype.$formatDate = date.formatDate
+Vue.prototype.$dateDiff = date.dateDiff
+Vue.prototype.$timeDiff = date.timeDiff
