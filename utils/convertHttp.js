@@ -10,6 +10,6 @@ export default (url) => {
   if (regexp.test(url)) {
     return url
   } else {
-    return `${baseUrl}${url}`
+    return `${baseUrl}${url.replace(/\\/g, '/')}`
   }
 }

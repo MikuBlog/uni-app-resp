@@ -27,6 +27,7 @@ export const adapter = config => {
 			responseType: config.responseType === 'arraybuffer' ? 'arraybuffer' : 'text',
 			dataType: config.responseType === 'json' ? 'json' : config.responseType,
 			success: (res) => {
+				request.data = res.data
 				settle(resolve, reject, {
 					data: res.data,
 					status: res.statusCode,

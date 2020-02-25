@@ -49,7 +49,12 @@ function addInterceptors(obj) {
 		}, err => {
 			const regexp = new RegExp(/timeout/g)
 			typeof err.response === "object"
-			? ((err.response.status === 401)
+			? ((err.response.status === 400)
+			? uni.showToast({
+				icon: 'none',
+				title: err.response.request.data.message
+			})
+			: (err.response.status === 401)
 			? (uni.showToast({
 				icon: 'none',
 				title: '请登录'
