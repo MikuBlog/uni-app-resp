@@ -36,3 +36,9 @@ import date from '@/api/date'
 Vue.prototype.$formatDate = date.formatDate
 Vue.prototype.$dateDiff = date.dateDiff
 Vue.prototype.$timeDiff = date.timeDiff
+Vue.prototype.$getTotalSes = date.getTotalSes
+
+// 获取授权信息
+import Auth from '@/api/auth'
+// 仅适用于微信小程序
+Vue.prototype.$getLocationAuth = Auth.getLocationAuth

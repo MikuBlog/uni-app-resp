@@ -27,7 +27,9 @@ const showToast = function({
 	uni.showToast({
 		title: title || "",
 		icon: icon || "success",
-		mask: mask || true,
+		mask: mask !== undefined
+		? mask
+		: true,
 		duration: duration || 1500,
 		success: success || (() => {}),
 		fail: fail || (() => {}),
@@ -44,7 +46,9 @@ const showLoading = function({
 }) {
 	uni.showLoading({
 		title: title || "",
-		mask: mask || true,
+		mask: mask !== undefined
+		? mask
+		: true,
 		success: success || (() => {}),
 		fail: fail || (() => {}),
 		complete: complete || (() => {})

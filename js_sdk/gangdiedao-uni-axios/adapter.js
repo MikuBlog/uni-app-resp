@@ -13,7 +13,7 @@ const timer = new Timeout()
 export const adapter = config => {
 	return new Promise((resolve, reject) => {
 		const requestMethod = (isString(config.method) ? config.method : 'GET').toUpperCase()
-		const requestUrl = buildUrl(config.url, config.params, config.paramsSerializer)
+		const requestUrl = buildUrl(config.baseURL + config.url, config.params, config.paramsSerializer)
 		const requestHeaders = isObject(config.headers) ? config.headers : {}
 
 		// 请求数据
