@@ -42,3 +42,10 @@ Vue.prototype.$getTotalSes = date.getTotalSes
 import Auth from '@/api/auth'
 // 仅适用于微信小程序
 Vue.prototype.$getLocationAuth = Auth.getLocationAuth
+
+// 微信登录、微信支付
+import wxLogin from '@/api/h5_wx_login'
+import wxPay from '@/api/h5_wx_pay'
+// 仅适用于h5
+Vue.prototype.$wxLogin = wxLogin
+Vue.prototype.$wxPay = wxPay

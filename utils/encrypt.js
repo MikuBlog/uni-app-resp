@@ -1,4 +1,4 @@
-import { JSEncrypt } from 'jsencrypt'
+import { JSEncrypt } from '@/js_sdk/jsencrypt'
 
 const publicKey = `MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiR+TyuZ0xfiBM0JuaQ49BG+pM
 jwJYzzeliGbHB0UAgf/G7Y5pMk9VbudyAWDZjinoRSgSTMWgK6X0rkpO4T1bsMzm

@@ -1,113 +1,11 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/home/run",
-			"style": {
-				"navigationBarTitleText": "跑步中"
-			}
-		},
-		{
-			"path": "pages/me/index",
-			"style": {
-				"navigationBarTitleText": "我的"
-			}
-		},
-		{
 			"path": "pages/home/index",
 			"style": {
-				"navigationBarTitleText": "跑步"
-			}
-		},
-		{
-			"path": "pages/record/run_record",
-			"style": {
-				"navigationBarTitleText": "跑步记录",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/me/college_message",
-			"style": {
-				"navigationBarTitleText": "院系信息"
-			}
-		},
-		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": "登录"
-			}
-		},
-		{
-			"path": "pages/me/modify",
-			"style": {
-				"navigationBarTitleText": "个人信息"
-			}
-		},
-		{
-			"path": "pages/me/setting",
-			"style": {
-				"navigationBarTitleText": "设置"
-			}
-		},
-		{
-			"path": "pages/me/notification",
-			"style": {
-				"navigationBarTitleText": "通知"
-			}
-		},
-		{
-			"path": "pages/announcement/index",
-			"style": {
-				"navigationBarTitleText": "公告",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/record/run_detail",
-			"style": {
-				"navigationBarTitleText": "跑步详情"
-			}
-		},
-		{
-			"path": "pages/home/finish_run",
-			"style": {
-				"navigationBarTitleText": "跑步结束"
-			}
-		},
-		{
-			"path": "pages/me/bind_phone",
-			"style": {
-				"navigationBarTitleText": "改绑手机"
-			}
-		},
-		{
-			"path": "pages/exception/submit",
-			"style": {
-				"navigationBarTitleText": "异常反馈"
-			}
-		},
-		{
-			"path": "pages/home/halfway",
-			"style": {
-				"navigationBarTitleText": "途中打卡"
-			}
-		},
-		{
-			"path": "pages/home/start",
-			"style": {
-				"navigationBarTitleText": "开始跑步"
-			}
-		},
-		{
-			"path": "pages/exception/result",
-			"style": {
-				"navigationBarTitleText": "反馈结果"
-			}
-		},
-		{
-			"path": "pages/announcement/detail",
-			"style": {
-				"navigationBarTitleText": "公告详情"
+				"navigationBarTitleText": "跑步中"
+				// "navigationStyle": "custom" 导航栏是否自定义
+				// "enablePullDownRefresh": true 是否下拉刷新
 			}
 		}
 	],
@@ -117,20 +15,10 @@
 		"backgroundColor": "#fff",
 		"borderStyle": "white",
 		"list": [{
-			"pagePath": "pages/home/index",
-			"iconPath": "static/index/icon/run.png",
-			"selectedIconPath": "static/index/icon/run_blue.png",
-			"text": "运动"
-		}, {
-			"pagePath": "pages/announcement/index",
-			"iconPath": "static/index/icon/tag_empty.png",
-			"selectedIconPath": "static/index/icon/tag_empty_blue.png",
-			"text": "公告"
-		}, {
-			"pagePath": "pages/me/index",
-			"iconPath": "static/index/icon/me.png",
-			"selectedIconPath": "static/index/icon/me_blue.png",
-			"text": "我的"
+			// "pagePath": "pages/home/index", 跳转路径
+			// "iconPath": "static/index/icon/run.png", // 默认icon
+			// "selectedIconPath": "static/index/icon/run_blue.png", // 选中后的icon
+			// "text": "运动" // 标题
 		}]
 	},
 	"globalStyle": {
