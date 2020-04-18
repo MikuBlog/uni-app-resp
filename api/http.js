@@ -52,7 +52,7 @@ function addInterceptors(obj) {
 			? ((err.response.status === 400)
 			? uni.showToast({
 				icon: 'none',
-				title: err.response.request.data.message
+				title: err.response.request.data.message.split(" ")[0]
 			})
 			: (err.response.status === 401)
 			? (uni.showToast({
