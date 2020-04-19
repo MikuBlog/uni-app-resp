@@ -58,8 +58,30 @@ const timeDiff = (time_1, time_2) => {
 		: ses}`
 }
 
+/**
+ * @author xuanzai
+ * @description 时间差
+ * @param {String} date 中文日期格式
+ * @return {String} 带年月日的中文日期
+ */
+function dateToChinese(date) {
+	if(!date) {
+		return
+	}
+	if((typeof date).toLowerCase() === 'object') {
+		date = formatDate(date, true)
+	}
+	const arr = date.split(/[ \/-]/g)
+	return `${arr[0]}年${arr[1] < 10
+			? arr[1].replace(/0/, '')
+			: arr[1]}月${arr[2] < 10
+			? arr[2].replace(/0/, '')
+			: arr[2]}日 ${date.split(" ")[1]}`
+}
+
 export default {
 	formatDate,
 	dateDiff,
-	timeDiff
+	timeDiff,
+	dateToChinese
 }

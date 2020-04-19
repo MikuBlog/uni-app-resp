@@ -36,6 +36,7 @@ import date from '@/api/date'
 Vue.prototype.$formatDate = date.formatDate
 Vue.prototype.$dateDiff = date.dateDiff
 Vue.prototype.$timeDiff = date.timeDiff
+Vue.prototype.$dateToChinese = date.dateToChinese
 Vue.prototype.$getTotalSes = date.getTotalSes
 
 // 获取授权信息
