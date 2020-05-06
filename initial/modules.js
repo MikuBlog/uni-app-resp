@@ -1,6 +1,8 @@
 import Vue from 'vue'
-// 引入二次封装的axios模块
-import Http from '@/api/http'
+// 引入二次封装的axios模块(wx模块)
+import Http from '@/api/http_wx.js'
+// 引入二次封装的axios模块(h5模块)
+// import Http from '@/api/http_h5.js'
 
 Vue.prototype.$http_normal = Http.http_normal
 Vue.prototype.$http_json = Http.http_json

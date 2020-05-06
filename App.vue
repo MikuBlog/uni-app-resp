@@ -18,14 +18,13 @@
 <style>
 page {
 	background-color: #efefef;
-	height: 100%;
 	overflow: auto;
 }
 .uni-list-item {
 	padding: 0 20upx !important;
 }
 .uni-list-item__container {
-	padding: 26upx 10upx!important;
+	padding: 32upx 10upx!important;
 }
 </style>
 <script>
@@ -41,6 +40,16 @@ page {
 		},
 		created() {
 			console.log('App created')
+		},
+		mounted() {
+			// h5适用（软键盘不顶起）
+			// var hrt = document.body.clientHeight
+			// window.onload = function() {
+			// 	document.body.style.height = `${hrt}px`
+			// }
+			// window.onresize = () => {
+			// 	document.body.style.height = `${hrt}px`
+			// }
 		}
 	}
 </script>
