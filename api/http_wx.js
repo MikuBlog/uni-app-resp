@@ -28,6 +28,8 @@ function addInterceptors(obj) {
 			&& (config.headers.Authorization = `Bearer ${uni.getStorageSync('token')}`)
 			&& (new RegExp(/\/auth\/login/g).test(config.url) || new RegExp(/\/auth\/loginWx/g).test(config.url) || new RegExp(/\/auth\/loginPh/g).test(config.url))
 			&& (config.headers.Authorization = "")
+			// 为h5准备的测试token
+			// config.headers.Authorization = `Bearer `
 			uni.showLoading({
 			    title: '加载中',
 					mask: true
