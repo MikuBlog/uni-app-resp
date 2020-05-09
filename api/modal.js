@@ -29,7 +29,7 @@ const showToast = function({
 		icon: icon || "success",
 		mask: mask !== undefined
 		? mask
-		: true,
+		: false,
 		duration: duration || 1500,
 		success: success || (() => {}),
 		fail: fail || (() => {}),
