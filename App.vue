@@ -1,33 +1,43 @@
 <script>
+	// #ifdef H5
+	import { appid, callbackUrl } from '@/global/js/baseUrl'
 	export default {
-		globalData: {
-			nowPage: "login"
-		},	
-		onLaunch: function() {
-			console.log('App Launch')
+		onLaunch() {
+			if(this.$getMemoryPmt("token")) {
+				return
+			}
+			const code = this.$wxLogin({
+				appid,
+				url: callbackUrl,
+				scope: 'snsapi_userinfo'
+			})
+			if(code) {
+				return this.$http_json({
+					url: "/auth/loginWx",
+					method: "post",
+					data: {
+						appid,
+						jscode: code
+					}
+				}).then(result => {
+					this.$setMemoryPmt("token", result.data.token)
+					this.$setMemoryPmt("userInfo", result.data.user)
+				})
+			}
 		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
+		mounted() {
+			// h5适用（软键盘不顶起）
+			var hrt = document.body.clientHeight
+			window.onload = function() {
+				document.body.style.height = `${hrt}px`
+			}
+			window.onresize = () => {
+				document.body.style.height = `${hrt}px`
+			}
 		}
 	}
-</script>
-
-<style>
-page {
-	background-color: #efefef;
-	overflow: auto;
-}
-.uni-list-item {
-	padding: 0 20upx !important;
-}
-.uni-list-item__container {
-	padding: 32upx 10upx!important;
-}
-</style>
-<script>
+	// #endif
+	// #ifndef H5
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -40,18 +50,9 @@ page {
 		},
 		created() {
 			console.log('App created')
-		},
-		mounted() {
-			// h5适用（软键盘不顶起）
-			// var hrt = document.body.clientHeight
-			// window.onload = function() {
-			// 	document.body.style.height = `${hrt}px`
-			// }
-			// window.onresize = () => {
-			// 	document.body.style.height = `${hrt}px`
-			// }
 		}
 	}
+	// #endif
 </script>
 
 <style>

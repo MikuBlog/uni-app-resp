@@ -1,8 +1,12 @@
 import Vue from 'vue'
-// 引入二次封装的axios模块(wx模块)
+// #ifndef H5
+// 引入二次封装的axios模块
 import Http from '@/api/http_wx.js'
-// 引入二次封装的axios模块(h5模块)
-// import Http from '@/api/http_h5.js'
+// #endif
+// #ifdef H5
+// 引入二次封装的axios模块
+import Http from '@/api/http_h5.js'
+// #endif
 
 Vue.prototype.$http_normal = Http.http_normal
 Vue.prototype.$http_json = Http.http_json
@@ -46,9 +50,18 @@ import Auth from '@/api/auth'
 // 仅适用于微信小程序
 Vue.prototype.$getLocationAuth = Auth.getLocationAuth
 
+// #ifdef H5
 // 微信登录、微信支付
 import wxLogin from '@/api/h5_wx_login'
 import wxPay from '@/api/h5_wx_pay'
-// 仅适用于h5
 Vue.prototype.$wxLogin = wxLogin
 Vue.prototype.$wxPay = wxPay
+// #endif
+
+// 复制内容
+import copy from '@/api/copy'
+Vue.prototype.$copyText = copy
+
+// 获取图片信息
+import imageFile from '@/api/get_file_image'
+Vue.prototype.$getImgFile = imageFile.getImgFile
