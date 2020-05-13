@@ -2,9 +2,13 @@
 	// #ifdef H5
 	import { appid, callbackUrl } from '@/global/js/baseUrl'
 	export default {
+		// h5微信登录专用
 		onLaunch() {
 			if(this.$getMemoryPmt("token")) {
 				return
+			}
+			if(window.location.pathname !== '/') {
+				this.$setMemoryPmt('url', window.location.pathname + window.location.search)
 			}
 			const code = this.$wxLogin({
 				appid,

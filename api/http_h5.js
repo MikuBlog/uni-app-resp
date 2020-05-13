@@ -17,7 +17,7 @@ axios.defaults.transformResponse = [(data) => {
 }]
 
 // 请求拦截
-function addInterceptors(obj) {
+function addInterceptors(obj, isLoading = true) {
 	obj
 		.interceptors
 		.request
@@ -28,7 +28,7 @@ function addInterceptors(obj) {
 			&& (config.headers.Authorization = `Bearer ${uni.getStorageSync('token')}`)
 			&& (new RegExp(/\/auth\/login/g).test(config.url) || new RegExp(/\/auth\/loginWx/g).test(config.url) || new RegExp(/\/auth\/loginPh/g).test(config.url))
 			&& (config.headers.Authorization = "")
-			uni.showLoading({
+			isLoading && uni.showLoading({
 			    title: '加载中',
 					mask: true
 			})
@@ -44,7 +44,7 @@ function addInterceptors(obj) {
 		.interceptors
 		.response
 		.use(response => {
-			uni.hideLoading()
+			isLoading && uni.hideLoading()
 			return response
 		}, err => {
 			const regexp = new RegExp(/timeout/g)
@@ -122,12 +122,23 @@ const http_file = axios.create({
 	}]
 })
 
+const http = axios.create({
+	headers: {
+		"Content-Type": "application/json"
+	},
+	transformRequest: [(data) => {
+		return JSON.stringify(data)
+	}]
+})
+
 addInterceptors(http_normal)
 addInterceptors(http_json)
 addInterceptors(http_file)
+addInterceptors(http, false)
 
 export default {
 	http_normal,
 	http_json,
-	http_file
+	http_file,
+	http
 }

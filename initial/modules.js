@@ -11,6 +11,7 @@ import Http from '@/api/http_h5.js'
 Vue.prototype.$http_normal = Http.http_normal
 Vue.prototype.$http_json = Http.http_json
 Vue.prototype.$http_file = Http.http_file
+Vue.prototype.$http = Http.http
 
 // 引入存储模块
 import Storage from '@/api/storage'
