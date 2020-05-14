@@ -8,29 +8,19 @@ moment.locale(language)
  * @description 日期格式化
  */
 function formatDate(date, isAccurate = false) {
-	let rules = `YYYY-MM-DD${isAccurate
+	return moment(date).format(`YYYY-MM-DD${isAccurate
 	? ' HH:mm:ss'
-	: ''}`
-	if(date) {
-		return moment(date).format(rules)
-	} else {
-		return moment().format(rules)
-	}
+	: ''}`)
 }
 
 /**
  * @author xuanzai
  * @description 设置天数
  */
-function setDay(date, number, isAccurate = false) {
-	let rules = `YYYY-MM-DD${isAccurate
+function setDay(date, number, isAccurate = false) { 
+	return moment(date).add(number, 'days').format(`YYYY-MM-DD${isAccurate
 	? ' HH:mm:ss'
-	: ''}`
-	if(date) {
-		return moment(date).add(number, 'days').format(rules)
-	} else {
-		return moment(date).add(number, 'day').format(rules)
-	}
+	: ''}`)
 }
 
 /**
@@ -38,14 +28,9 @@ function setDay(date, number, isAccurate = false) {
  * @description 设置月份
  */
 function setMonth(date, number, isAccurate = false) {
-	let rules = `YYYY-MM-DD${isAccurate
+	return moment(date).add(number, 'months').format(`YYYY-MM-DD${isAccurate
 	? ' HH:mm:ss'
-	: ''}`
-	if(date) {
-		return moment(date).add(number, 'months').format(rules)
-	} else {
-		return moment(date).add(number, 'months').format(rules)
-	}
+	: ''}`)
 }
 
 /**
@@ -53,14 +38,9 @@ function setMonth(date, number, isAccurate = false) {
  * @description 设置年份
  */
 function setYear(date, number, isAccurate = false) {
-	let rules = `YYYY-MM-DD${isAccurate
+	return moment(date).add(number, 'years').format(`YYYY-MM-DD${isAccurate
 	? ' HH:mm:ss'
-	: ''}`
-	if(date) {
-		return moment(date).add(number, 'years').format(rules)
-	} else {
-		return moment(date).add(number, 'years').format(rules)
-	}
+	: ''}`)
 }
 
 /**
@@ -70,18 +50,11 @@ function setYear(date, number, isAccurate = false) {
 function setDate(date, {
 	years, quarters, months, weeks, days, hours, minutes, seconds, milliseconds
 }, isAccurate = false) {
-	const 
-		obj = {
-			years, quarters, months, weeks, days, hours, minutes, seconds, milliseconds
-		},
-		rules = `YYYY-MM-DD${isAccurate
-		? ' HH:mm:ss'
-		: ''}`
-	if(date) {
-		return moment(date).add(obj).format(rules)
-	} else {
-		return moment(date).add(obj).format(rules)
-	}
+	return moment(date).add({
+		years, quarters, months, weeks, days, hours, minutes, seconds, milliseconds
+	}).format(`YYYY-MM-DD${isAccurate
+	? ' HH:mm:ss'
+	: ''}`)
 }
 
 /**
