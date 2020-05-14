@@ -42,9 +42,11 @@ import date from '@/api/date'
 
 Vue.prototype.$formatDate = date.formatDate
 Vue.prototype.$dateDiff = date.dateDiff
-Vue.prototype.$timeDiff = date.timeDiff
-Vue.prototype.$dateToChinese = date.dateToChinese
-Vue.prototype.$getTotalSes = date.getTotalSes
+Vue.prototype.$setDay = date.setDay
+Vue.prototype.$setMonth = date.setMonth
+Vue.prototype.$setYear = date.setYear
+Vue.prototype.$setDate = date.setDate
+Vue.prototype.$fromNow = date.fromNow
 
 // #ifdef MP-WEIXIN
 // 获取授权信息
