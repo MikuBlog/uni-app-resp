@@ -13,7 +13,7 @@ Vue.prototype.$http_json = Http.http_json
 Vue.prototype.$http_file = Http.http_file
 Vue.prototype.$http = Http.http
 
-// 引入存储模块
+// 引入存储模块（localStorage）
 import Storage from '@/api/storage'
 
 Vue.prototype.$setMemoryPmt = Storage.setMemoryPmt
@@ -46,10 +46,12 @@ Vue.prototype.$timeDiff = date.timeDiff
 Vue.prototype.$dateToChinese = date.dateToChinese
 Vue.prototype.$getTotalSes = date.getTotalSes
 
+// #ifdef MP-WEIXIN
 // 获取授权信息
 import Auth from '@/api/auth'
 // 仅适用于微信小程序
 Vue.prototype.$getLocationAuth = Auth.getLocationAuth
+// #endif
 
 // #ifdef H5
 // 微信登录、微信支付

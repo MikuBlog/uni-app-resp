@@ -7,6 +7,7 @@
 			if(this.$getMemoryPmt("token")) {
 				return
 			}
+			// 用于h5重定向
 			if(window.location.pathname !== '/') {
 				this.$setMemoryPmt('url', window.location.pathname + window.location.search)
 			}

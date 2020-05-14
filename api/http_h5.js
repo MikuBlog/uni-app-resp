@@ -1,3 +1,7 @@
+/**
+ * @author xuanzai
+ * @description h5专用axios封装模块
+ */
 import { baseUrl } from '@/global/js/baseUrl.js'
 import store from '@/store/index.js'
 import axios from 'axios'

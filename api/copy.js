@@ -1,7 +1,7 @@
 /**
  * @author xuanzai
  * @description 复制文本
- * @param {DOM | String} obj 
+ * @param {String} obj 
  * @returns {Promise}
  */
 function copyText(obj) {

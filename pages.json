@@ -1,5 +1,14 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		// #ifdef H5
+		{
+			"path": "pages/redirect/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle": "custom"
+			}
+		},
+		// #endif
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -18,7 +27,7 @@
 			// "pagePath": "pages/index/index", 跳转路径
 			// "iconPath": "static/index/icon/run.png", // 默认icon
 			// "selectedIconPath": "static/index/icon/run_blue.png", // 选中后的icon
-			// "text": "运动" // 标题
+			// "text": "首页" // 标题
 		}]
 	},
 	"globalStyle": {

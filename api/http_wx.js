@@ -1,3 +1,7 @@
+/**
+ * @author xuanzai
+ * @description 微信小程序专用axios封装模块
+ */
 import { baseUrl } from '@/global/js/baseUrl.js'
 import store from '@/store/index.js'
 import axios from '../js_sdk/gangdiedao-uni-axios'
