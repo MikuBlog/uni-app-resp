@@ -1,9 +1,13 @@
 <script>
+	import config from '@/global/js/config'
 	// #ifdef H5
 	import { appid, callbackUrl } from '@/global/js/baseUrl'
 	export default {
 		// h5微信登录专用
 		onLaunch() {
+			if(!config.isH5WxLogin) {
+				return
+			}
 			if(this.$getMemoryPmt("token")) {
 				return
 			}
@@ -59,9 +63,3 @@
 	}
 	// #endif
 </script>
-
-<style>
-	page {
-		font-size: 30rpx;
-	}
-</style>

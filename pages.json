@@ -8,6 +8,20 @@
 				"navigationStyle": "custom"
 			}
 		},
+		{
+			"path": "pages/h5_login/index",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		// #endif
+		// #ifdef MP-WEIXIN
+		{
+			"path": "pages/wx_login/index",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
 		// #endif
 		{
 			"path": "pages/index/index",

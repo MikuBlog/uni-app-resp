@@ -4,12 +4,13 @@
  * @param {String} url 文件路径
  * @returns {String} 文件地址
  */
-import { baseUrl } from "@/global/js/baseUrl.js"
+import { prefixUrl, thumb } from "@/global/js/baseUrl.js"
 export default (url) => {
   const regexp = new RegExp(/^http/)
+	if(!url) return thumb
   if (regexp.test(url)) {
     return url
   } else {
-    return `${baseUrl}${url.replace(/\\/g, '/')}`
+    return `${prefixUrl}${url.replace(/\\/g, '/')}`
   }
 }

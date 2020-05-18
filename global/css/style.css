@@ -1,11 +1,29 @@
+page {
+	font-size: 32upx;
+	background-color: #efefef;
+	/* #ifndef H5 */
+	height: 100%;
+	overflow: auto;
+	/* #endif */
+}
+
 .primary-text-button {
-	color: #007aff!important;
+	color: #007aff !important;
 }
+
 .default-text-button {
-	color: #8d8d8d!important;
+	color: #8d8d8d !important;
 }
+
 button {
-	font-size: 28rpx;
-	padding: 10rpx 0;
+	font-size: 28upx;
+	padding: 10upx 0;
 	background: #fefefe;
+}
+
+.uni-list-item {
+	padding: 0 20upx !important;
+}
+.uni-list-item__container {
+	padding: 26upx 10upx !important;
 }

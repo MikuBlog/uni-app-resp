@@ -125,18 +125,37 @@ const http_json = axios.create({
 	}]
 })
 
-const http_file = axios.create({
-	headers: {
-		"Content-Type": "multipart/form-data"
-	},
-	transformRequest: [(data) => {
-		const formData = new FormData()
-		for(let key in data) {
-			formData.append(key, data[key])
-		}
-		return formData
-	}]
-})
+const http_file = ({
+	url,
+	method,
+	data
+}) => {
+	return new Promise((resolve, reject) => {
+		let file = data.file
+		delete data.file
+		uni.showLoading({
+		    title: '加载中',
+				mask: true
+		})
+		uni.uploadFile({
+			url: `${baseUrl}${url}`,
+			header: {
+				Authorization: `Bearer ${uni.getStorageSync('token')}`
+			},
+			filePath: file,
+			formData: data,
+			success: e => {
+				resolve(e)
+			},
+			fail: e => {
+				reject(e)
+			},
+			complete: e => {
+				uni.hideLoading()
+			}
+		})
+	})
+}
 
 const http = axios.create({
 	headers: {
@@ -149,7 +168,6 @@ const http = axios.create({
 
 addInterceptors(http_normal)
 addInterceptors(http_json)
-addInterceptors(http_file)
 addInterceptors(http, false)
 
 export default {
