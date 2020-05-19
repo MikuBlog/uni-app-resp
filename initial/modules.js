@@ -65,6 +65,10 @@ Vue.prototype.$wxPay = wxPay
 Vue.prototype.$wxShare = wxShare
 // #endif
 
+// 解决图片翻转
+import rotateImage from '@/api/rotate_image'
+Vue.prototype.$rotateImage = rotateImage
+
 // 复制内容
 import copy from '@/api/copy'
 Vue.prototype.$copyText = copy
