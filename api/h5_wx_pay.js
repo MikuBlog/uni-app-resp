@@ -1,3 +1,6 @@
+import {
+	appId
+} from '@/global/js/baseUrl'
 /*
     微信支付方法(uni-app h5)适用
     获取微信加签信息
@@ -23,29 +26,7 @@
 */
 import wx from 'jweixin-module'
 const wexinPay = (data, cb, errorCb, complete) => {
-	// let [appId, timestamp, nonceStr, signature, packageValue, paySign] = [data.appId, data.timeStamp, data.nonceStr, data.signature,
-	//     data.packageValue, data.paySign
-	// ];
-	// WeixinJSBridge.invoke(
-	// 	'getBrandWCPayRequest', {
-	// 		"appId": appId, //公众号名称，由商户传入     
-	// 		"timeStamp": timestamp, //时间戳，自1970年以来的秒数     
-	// 		"nonceStr": nonceStr, //随机串     
-	// 		"package": packageValue,
-	// 		"signType": "MD5", //微信签名方式：     
-	// 		"paySign": paySign //微信签名 
-	// 	},
-	// 	function(res) {
-	// 		alert(JSON.stringify(res))
-	// 		if (res.err_msg == "get_brand_wcpay_request:ok") {
-	// 			// 使用以上方式判断前端返回,微信团队郑重提示：
-	// 			//res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-	// 			cb(res)
-	// 		}else {
-	// 			errorCb(res)
-	// 		}
-	// 	});
-	   let [appId, timestamp, nonceStr, signature, packageValue, paySign] = [data.appId, data.timeStamp, data.nonceStr, data.signature,
+	   let [timestamp, nonceStr, signature, packageValue, paySign] = [ data.timeStamp, data.nonceStr, data.signature,
 	       data.packageValue, data.paySign
 	   ];
 
