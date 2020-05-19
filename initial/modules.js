@@ -64,10 +64,11 @@ Vue.prototype.$wxLogin = wxLogin
 Vue.prototype.$wxPay = wxPay
 Vue.prototype.$wxShare = wxShare
 // #endif
-
+// #ifndef H5
 // 解决图片翻转
 import rotateImage from '@/api/rotate_image'
 Vue.prototype.$rotateImage = rotateImage
+// #endif
 
 // 复制内容
 import copy from '@/api/copy'

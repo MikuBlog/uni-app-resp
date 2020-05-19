@@ -43,6 +43,9 @@ export default function (img, cb) {
 				}
 				canvasContext.draw();
 				resolve();
+			},
+			fail: e => {
+				reject(e)
 			}
 		});
 	})
