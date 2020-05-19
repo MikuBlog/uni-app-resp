@@ -56,11 +56,13 @@ Vue.prototype.$getLocationAuth = Auth.getLocationAuth
 // #endif
 
 // #ifdef H5
-// 微信登录、微信支付
+// 微信登录、微信支付、微信分享
 import wxLogin from '@/api/h5_wx_login'
 import wxPay from '@/api/h5_wx_pay'
+import wxShare from '@/api/h5_wx_share'
 Vue.prototype.$wxLogin = wxLogin
 Vue.prototype.$wxPay = wxPay
+Vue.prototype.$wxShare = wxShare
 // #endif
 
 // 复制内容
