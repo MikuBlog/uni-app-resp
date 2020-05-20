@@ -6,7 +6,7 @@ import {
  * @description 微信分享
  */
 import wx from 'jweixin-module'
-const wexinPay = (data, cb, errorCb, complete) => {
+const wexinPay = (data, cb = () => {}, errorCb = () => {}, complete = () => {}) => {
 	let [timestamp, 
 	nonceStr, 
 	signature, 

@@ -4,7 +4,7 @@
  */
 import { baseUrl } from '@/global/js/baseUrl.js'
 import store from '@/store/index.js'
-import axios from '../js_sdk/gangdiedao-uni-axios'
+import axios from '@/js_sdk/gangdiedao-uni-axios'
 
 // 给所有axios实例配置请求根路径
 axios.defaults.baseURL = baseUrl

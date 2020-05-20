@@ -25,7 +25,7 @@ import {
         })
 */
 import wx from 'jweixin-module'
-const wexinPay = (data, cb, errorCb, complete) => {
+const wexinPay = (data, cb = () => {}, errorCb = () => {}, complete = () => {}) => {
 	   let [timestamp, nonceStr, signature, packageValue, paySign] = [ data.timeStamp, data.nonceStr, data.signature,
 	       data.packageValue, data.paySign
 	   ];
