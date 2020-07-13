@@ -127,20 +127,20 @@ export default {
 }
 .box {
 	position: relative;
-	width: 500upx;
-	height: 300upx;
-	left: 375upx;
-	top: 400upx;
+	width: 500rpx;
+	height: 300rpx;
+	left: 375rpx;
+	top: 400rpx;
 	transform: translateX(-50%);
 	text-align: center;
 	background-color: #fefefe;
-	border-radius: 20upx;
+	border-radius: 20rpx;
 }
 .button-header {
 	position: relative;
-	top: 80upx;
+	top: 80rpx;
 	text-align: center;
-	font-size: 40upx;
+	font-size: 40rpx;
 }
 .button-box {
 	position: absolute;
@@ -154,18 +154,18 @@ export default {
 }
 .login-button {
 	position: absolute;
-	bottom: 200upx;
-	width: 600upx;
+	bottom: 200rpx;
+	width: 600rpx;
 	left: 50%;
-	margin-left: -300upx;
+	margin-left: -300rpx;
 	background-color: #fad126!important;
-	font-size: 32upx;
+	font-size: 32rpx;
 	image {
 		position: relative;
-		top: 10upx;
-		right: 10upx;
-		width: 50upx;
-		height: 40upx;
+		top: 10rpx;
+		right: 10rpx;
+		width: 50rpx;
+		height: 40rpx;
 	}
 }
 </style>

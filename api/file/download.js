@@ -1,4 +1,3 @@
-import axios from 'axios'
 /**
  * @author xuanzai
  * @description 下载文件

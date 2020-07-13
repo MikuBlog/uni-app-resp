@@ -38,10 +38,15 @@
 		"backgroundColor": "#fff",
 		"borderStyle": "white",
 		"list": [{
-			// "pagePath": "pages/index/index", 跳转路径
+			"pagePath": "pages/index/index", // 跳转路径
 			// "iconPath": "static/index/icon/run.png", // 默认icon
 			// "selectedIconPath": "static/index/icon/run_blue.png", // 选中后的icon
-			// "text": "首页" // 标题
+			"text": "首页" // 标题
+		}, {
+			"pagePath": "pages/wx_login/index", // 跳转路径
+			// "iconPath": "static/index/icon/run.png", // 默认icon
+			// "selectedIconPath": "static/index/icon/run_blue.png", // 选中后的icon
+			"text": "登录" // 标题
 		}]
 	},
 	"globalStyle": {

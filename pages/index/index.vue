@@ -1,8 +1,5 @@
 <template>
 	<view class="content">
-		<view @click="downloadFile">
-			点我下载
-		</view>
 	</view>
 </template>
 

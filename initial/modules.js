@@ -58,12 +58,19 @@ Vue.prototype.$getLocationAuth = Auth.getLocationAuth
 // #ifdef H5
 // 微信登录、微信支付、微信分享
 import wxLogin from '@/api/h5/wx_login'
-import wxPay from '@/api/h5/wx_pay'
+import wxPay from '@/api/pay/h5_wx_pay'
 import wxShare from '@/api/h5/wx_share'
 Vue.prototype.$wxLogin = wxLogin
 Vue.prototype.$wxPay = wxPay
 Vue.prototype.$wxShare = wxShare
 // #endif
+
+// #ifndef H5
+// 微信支付
+// import wxPay from '@/api/pay/auth.js'
+// Vue.prototype.$wxPay = wxPay
+// #endif
+
 // #ifndef H5
 // 解决图片翻转
 import rotateImage from '@/api/file/rotate_image'
