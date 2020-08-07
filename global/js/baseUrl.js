@@ -12,3 +12,5 @@ export const callbackUrl = "https://basefront.whalenect.com/h5"
 // #endif
 // 语言
 export const language = 'zh-cn'
+// 测试token
+export const token = "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyIiwic3ViIjoiYWRtaW4iLCJpYXQiOjE1OTYwMTM3ODEsImF1dGgiOiJBRE1JTiIsImV4cCI6MTU5NjYxODU4MX0.3_Rcmv-bvjBh7Tqjuf2Eu9mexkRDK87n6TXwDEr3-69QctRUsbS6ZswonsuqFwhBM1VtKIxSdazwl2eMY-XxfQ"

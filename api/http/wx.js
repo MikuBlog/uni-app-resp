@@ -30,6 +30,7 @@ function addInterceptors(obj, isLoading = true) {
 		.use(config => {
 			// 统一对中文字符编码
 			config.url = encodeURI(config.url)
+			// uni.setStorageSync('token', token)
 			uni.getStorageSync('token') &&
 				(config.headers.Authorization = `Bearer ${uni.getStorageSync('token')}`) &&
 				(new RegExp(/\/auth\/login/g).test(config.url) || new RegExp(/\/auth\/loginWx/g).test(config.url) || new RegExp(

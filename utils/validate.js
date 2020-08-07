@@ -47,3 +47,11 @@ export function isLowerCase(s) {
 export function isUpperCase(s) {
 	return /^[A-Z]+$/.test(s)
 }
+/**
+ * @description 验证是否为正常字符
+ * @param {String} s 
+ */
+export function isReaCharacter(s) {
+	let validateResult = s.match(/^[\u4E00-\u9FA5A-Za-z0-9_,.，。!！、\-？?↵\r\n\s]+$/g)
+	return !!( validateResult && validateResult.length)
+}

@@ -37,6 +37,7 @@
 		"selectedColor": "#0293e9",
 		"backgroundColor": "#fff",
 		"borderStyle": "white",
+		// "custom": true,
 		"list": [{
 			"pagePath": "pages/index/index", // 跳转路径
 			// "iconPath": "static/index/icon/run.png", // 默认icon
