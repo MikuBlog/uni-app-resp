@@ -96,16 +96,15 @@ export default {
 			})
 		},
 		async getuserinfo(e) {
+			if(!e.detail.userInfo) return
 			await this.checkReg()
-			const infoRes = e.mp.detail
+			const infoRes = e.mp.detail.userInfo
 			this.isLogin = true
-			this.loginMsg.wxUser = e.mp.detail.userInfo
-			this.loginMsg.wxUser.nickname = this.loginMsg.userInfo.nickName
-			this.loginMsg.wxUser.gender = `${this.loginMsg.userInfo.gender}`
-			delete this.loginMsg.wxUser.nickName
+			this.loginMsg.wxUser = infoRes
 		},
 		// 获取电话号码
 		getphonenumber(e) {
+			if(!e.detail.encryptedData) return
 			const infoRes = e.detail
 			this.loginMsg.phoneInfo.encryptedData = infoRes.encryptedData
 			this.loginMsg.phoneInfo.iv = infoRes.iv
