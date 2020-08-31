@@ -3,17 +3,20 @@
 		<view :style="{borderRadius:radius+'px',backgroundColor: bgColor}" class="uni-searchbar__box" @click="searchClick">
 			<!-- #ifdef MP-ALIPAY -->
 			<view class="uni-searchbar__box-icon-search">
-				<uni-icons color="#999999" size="18" type="search" />
+				<uni-icons color="#999999" size="36" type="search" />
 			</view>
 			<!-- #endif -->
 			<!-- #ifndef MP-ALIPAY -->
-			<uni-icons color="#999999" class="uni-searchbar__box-icon-search" size="18" type="search" />
+			<uni-icons color="#999999" class="uni-searchbar__box-icon-search" size="36" type="search" />
 			<!-- #endif -->
-			<input v-if="show" :focus="showSync" :placeholder="placeholder" :maxlength="maxlength" @confirm="confirm" class="uni-searchbar__box-search-input"
-			 confirm-type="search" type="text" v-model="searchVal" />
+			<input v-if="show && !disabled" :focus="showSync" :placeholder="placeholder" :maxlength="maxlength" @confirm="confirm" class="uni-searchbar__box-search-input"
+			 confirm-type="search" type="text" v-model="searchVal" maxlength="20" />
 			<text v-else class="uni-searchbar__text-placeholder">{{ placeholder }}</text>
+			<view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='')" @click="confirm">
+				<text style="color: #4793e8">确认</text>
+			</view>
 			<view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='')" class="uni-searchbar__box-icon-clear" @click="clear">
-				<uni-icons color="#999999" class="" size="24" type="clear" />
+				<uni-icons color="#999999" class="" size="40" type="clear" />
 			</view>
 		</view>
 		<text @click="cancel" class="uni-searchbar__cancel" v-if="cancelButton ==='always' || show && cancelButton ==='auto'">{{cancelText}}</text>
@@ -31,6 +34,10 @@
 			placeholder: {
 				type: String,
 				default: "请输入搜索内容"
+			},
+			disabled: {
+				type: Boolean,
+				default: false
 			},
 			radius: {
 				type: [Number, String],
@@ -66,9 +73,7 @@
 		},
 		watch: {
 			searchVal() {
-				this.$emit("input", {
-					value: this.searchVal
-				})
+				this.$emit("input", this.searchVal)
 			}
 		},
 		methods: {
@@ -86,9 +91,7 @@
 				this.searchVal = ""
 			},
 			cancel() {
-				this.$emit("cancel", {
-					value: this.searchVal
-				});
+				this.$emit("cancel", this.searchVal);
 				this.searchVal = ""
 				this.show = false
 				this.showSync = false
@@ -106,16 +109,14 @@
 				// #ifdef APP-PLUS
 				plus.key.hideSoftKeybord()
 				// #endif
-				this.$emit("confirm", {
-					value: this.searchVal
-				})
+				this.$emit("confirm", this.searchVal)
 			}
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
-	$uni-searchbar-height: 36px;
+	$uni-searchbar-height: 72rpx;
 
 	.uni-searchbar {
 		/* #ifndef APP-NVUE */
@@ -150,7 +151,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		width: 32px;
+		width: 64rpx;
 		justify-content: center;
 		align-items: center;
 		color: $uni-text-color-placeholder;
@@ -160,6 +161,7 @@
 		flex: 1;
 		font-size: $uni-font-size-base;
 		color: $uni-text-color;
+		height: 50rpx;
 	}
 
 	.uni-searchbar__box-icon-clear {

@@ -51,7 +51,8 @@
 				level: ''
 			};
 		},
-		mounted() {
+		created() {
+			uni.hideTabBar({})
 			let roles = this.$getMemoryPmt('roles');
 			/* console.log(userlevel); */
 			let _this = this;
@@ -60,12 +61,6 @@
 			} else {
 				_this.tabBar.splice(0, 3);
 			}
-		},
-		created() {
-			uni.hideTabBar({})
-		},
-		computed: {
-
 		},
 		methods: {
 			navTo(item, index) {

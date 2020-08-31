@@ -1,5 +1,5 @@
 <template>
-	<text :style="{ color: color, 'font-size': size + 'px' }" class="uni-icons" @click="_onClick">{{icons[type]}}</text>
+	<text :style="{ color: color, 'font-size': size + 'rpx' }" class="uni-icons" @click="_onClick">{{icons[type]}}</text>
 </template>
 
 <script>
@@ -24,7 +24,7 @@
 			},
 			size: {
 				type: [Number, String],
-				default: 16
+				default: 32
 			}
 		},
 		data() {
