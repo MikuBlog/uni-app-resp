@@ -16,7 +16,7 @@ export default {
 					return
 				}
 				this.$reLaunch({
-					url: "/pages/home/index"
+					url: "/pages/index/index"
 				})
 			}
 		}, 300)
