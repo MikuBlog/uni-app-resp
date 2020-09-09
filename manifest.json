@@ -82,6 +82,9 @@
             "base" : "",
             "mode" : "history"
         },
+				"devServer": {
+				  "disableHostCheck": true
+				},
         "title" : "uni-app-resp"
     }
 }
