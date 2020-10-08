@@ -1,5 +1,9 @@
 <template>
 	<view class="content">
+		<view @click="downloadImage">
+			点击下载海报图片
+		</view>
+		<image :src="img" mode="widthFix"></image>
 	</view>
 </template>
 

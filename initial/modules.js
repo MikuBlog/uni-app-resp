@@ -60,9 +60,20 @@ Vue.prototype.$getLocationAuth = Auth.getLocationAuth
 import wxLogin from '@/api/h5/wx_login'
 import wxPay from '@/api/pay/h5_wx_pay'
 import wxShare from '@/api/h5/wx_share'
+import jumpToOfficial from '@/api/h5/wx_official'
 Vue.prototype.$wxLogin = wxLogin
 Vue.prototype.$wxPay = wxPay
 Vue.prototype.$wxShare = wxShare
+Vue.prototype.$jumpToOfficial = jumpToOfficial
+// base64转blob
+import dataUrlToBlob from '@/api/file/get_file_image'
+Vue.prototype.$dataUrlToBlob = dataUrlToBlob.dataUrlToBlob
+// 选择文件
+import getFile from '@/api/file/get_file'
+Vue.prototype.$getFile = getFile
+// 下载base64图片
+import downloadBase64Image from '@/api/file/get_file_image'
+Vue.prototype.$downloadBase64Image = downloadBase64Image.downloadBase64Image
 // #endif
 
 // #ifndef H5
@@ -84,11 +95,7 @@ Vue.prototype.$copyText = copy
 // 获取图片信息
 import imageFile from '@/api/file/get_file_image'
 Vue.prototype.$getImgFile = imageFile.getImgFile
-// #ifdef H5
-// 选择文件
-import getFile from '@/api/file/get_file'
-Vue.prototype.$getFile = getFile
-// #endif
+
 // 下载文件
 import download from '@/api/file/download'
 Vue.prototype.$download = download

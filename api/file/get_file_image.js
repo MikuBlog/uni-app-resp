@@ -17,26 +17,27 @@ function getImgFile(limit = 10, count = 3) {
 		fileEle.style.display = 'none'
 		fileEle.addEventListener('change', () => {
 			const fileList = fileEle.files
-			let size = 0, urlList = []
+			let size = 0,
+				urlList = []
 			urlList.forEach.call(fileList, val => {
 				size += val.size
 				urlList.push(new Promise((resolve, reject) => {
-						let reader = new FileReader()
-						reader.readAsDataURL(val)
-						reader.addEventListener('load', () => {
-							resolve({
-								url: reader.result,
-								raw: val
-							})
+					let reader = new FileReader()
+					reader.readAsDataURL(val)
+					reader.addEventListener('load', () => {
+						resolve({
+							url: reader.result,
+							raw: val
 						})
+					})
 				}))
 			})
-			if(urlList.length > count) {
-				reject(`选择图片数量不能超过${count}张!`) 
+			if (urlList.length > count) {
+				reject(`选择图片数量不能超过${count}张!`)
 				return
 			}
-			if(size / (1024 ** 2) > limit) {
-				reject(`图片总大小不能超过${limit}MB!`) 
+			if (size / (1024 ** 2) > limit) {
+				reject(`图片总大小不能超过${limit}MB!`)
 				return
 			}
 			Promise.all(urlList).then(result => {
@@ -51,14 +52,14 @@ function getImgFile(limit = 10, count = 3) {
 	// #ifndef H5
 	return new Promise((resolve, reject) => {
 		uni.chooseImage({
-		    count: count, //默认9
-		    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-		    success: res => {
-		      resolve(res.tempFilePaths)
-		    },
-				fail: e => {
-					reject(e)
-				}
+			count: count, //默认9
+			sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			success: res => {
+				resolve(res.tempFilePaths)
+			},
+			fail: e => {
+				reject(e)
+			}
 		});
 	})
 	// #endif
@@ -96,10 +97,51 @@ function openPictureBase64(base64) {
 }
 // #endif
 
+/**
+ * @description base64转blob
+ * @param {String} base64 
+ */
+// #ifdef H5
+function dataUrlToBlob(dataurl) {
+	var arr = dataurl.split(',');
+	//注意base64的最后面中括号和引号是不转译的   
+	var _arr = arr[1].substring(0, arr[1].length - 2);
+	var mime = arr[0].match(/:(.*?);/)[1],
+		bstr = atob(_arr),
+		n = bstr.length,
+		u8arr = new Uint8Array(n);
+	while (n--) {
+		u8arr[n] = bstr.charCodeAt(n);
+	}
+	return new Blob([u8arr], {
+		type: mime
+	});
+}
+// #endif
+
+/**
+ * @description base64转blob
+ * @param {String} base64 
+ */
+// #ifdef H5
+function downloadBase64Image(base64) {
+	const a = document.createElement('a')
+	const event = document.createEvent('HTMLEvents')
+	event.initEvent("click", true, true);
+	a.download = 'image'
+	a.href = window.URL.createObjectURL(dataUrlToBlob(base64))
+	document.body.appendChild(a)
+	a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))
+	a.remove()
+}
+// #endif
+
 export default {
 	getImgFile,
 	// #ifdef H5
 	getBase64Image,
-	openPictureBase64
+	openPictureBase64,
+	dataUrlToBlob,
+	downloadBase64Image
 	// #endif
 }

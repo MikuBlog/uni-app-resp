@@ -13,6 +13,7 @@
 
 <script>
 import { encrypt } from '@/utils/encrypt'
+import { mapMutations } from 'vuex'
 export default {
 	data() {
 		return {
@@ -23,7 +24,11 @@ export default {
 	onUnload() {
 		this.SET_LOGIN_STATUS(false)
 	},
+	beforeDestroy() {
+		this.SET_LOGIN_STATUS(false)
+	},
 	methods: {
+		...mapMutations([ "SET_LOGIN_STATUS" ]),
 		// 账号登录
 		login() {
 			this.$http_json({
