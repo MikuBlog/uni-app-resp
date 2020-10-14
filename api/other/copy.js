@@ -7,10 +7,10 @@
 function copyText(obj) {
 	//#ifdef H5
 	return new Promise((resolve, reject) => {
-		// 动态创建 input 元素
-		var aux = document.createElement("input");
+		// 动态创建 textarea 元素
+		var aux = document.createElement("textarea");
 		// 获得需要复制的内容
-		aux.setAttribute("value", obj);
+		aux.value = obj
 		// 添加到 DOM 元素中
 		document.body.appendChild(aux);
 		// 执行选中

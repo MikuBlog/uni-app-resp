@@ -32,7 +32,7 @@ export default {
 		// 账号登录
 		login() {
 			this.$http_json({
-				url: "/auth/login",
+				url: "/api/auth/login",
 				method: "post",
 				data: {
 					username: this.username,

@@ -17,7 +17,7 @@ export function isPhone(s) {
  * @param {String} s 
  */
 export function isMobile(s) {
-  return /^1[3456789]{10}$/.test(s)
+  return /^1[0-9]{10}$/.test(s)
 }
 /**
  * @description 验证是否为身份证号码

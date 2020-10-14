@@ -67,7 +67,7 @@ export default {
 		async checkReg() {
 			await this.login()
 			return this.$http_json({
-				url: "/auth/checkWxReg",
+				url: "/api/auth/checkWxReg",
 				method: "post",
 				data: this.regMsg
 			}).then(result => {
@@ -83,7 +83,7 @@ export default {
 		async getAuth() {
 			await this.login()
 			this.$http_json({
-				url: "/auth/loginWx",
+				url: "/api/auth/loginWx",
 				method: "post",
 				data: this.loginMsg
 			}).then(result => {
