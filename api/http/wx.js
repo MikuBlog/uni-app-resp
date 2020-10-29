@@ -24,12 +24,16 @@ axios.defaults.transformResponse = [(data) => {
 
 // 请求拦截
 function addInterceptors(obj, isLoading = true) {
+	let loading = true
 	obj
 		.interceptors
 		.request
 		.use(config => {
 			// 统一对中文字符编码
 			config.url = encodeURI(config.url)
+			loading = config.loading !== undefined
+			? config.loading
+			: true
 			// uni.setStorageSync('token', token)
 			uni.getStorageSync('token') &&
 				(config.headers.Authorization = `Bearer ${uni.getStorageSync('token')}`) &&
@@ -38,12 +42,13 @@ function addInterceptors(obj, isLoading = true) {
 				(config.headers.Authorization = "")
 			// 为h5准备的测试token
 			// config.headers.Authorization = `Bearer `
-			isLoading && uni.showLoading({
-				title: '加载中',
-				mask: true
+			loading && isLoading && uni.showLoading({
+			    title: '加载中',
+					mask: true
 			})
 			return config
 		}, err => {
+			loading && isLoading && uni.hideLoading()
 			uni.showToast({
 				icon: 'none',
 				title: '服务器出错，请联系客服进行处理'
@@ -54,9 +59,10 @@ function addInterceptors(obj, isLoading = true) {
 		.interceptors
 		.response
 		.use(response => {
-			isLoading && uni.hideLoading()
+			loading && isLoading && uni.hideLoading()
 			return response
 		}, err => {
+			loading && isLoading && uni.hideLoading()
 			const regexp = new RegExp(/timeout/g)
 			typeof err.response === "object" ?
 				((err.response.status === 400) ?
