@@ -2,6 +2,8 @@
 export const baseUrl = "http://xuanzai.vipgz4.idcfengye.com"
 // 静态资源请求地址前缀
 export const prefixUrl = "http://xuanzai.vipgz4.idcfengye.com"
+// 图片cdn地址前缀
+export const cdnUrl = "http://xuanzai.vipgz4.idcfengye.com"
 // 缺省占位图
 export const thumb = "https://myinterface.xuanzai.top/getPicture?type=error"
 // appid

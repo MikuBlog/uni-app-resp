@@ -104,7 +104,8 @@
         "appid" : "wx778b0ce131bb9a03",
         "setting" : {
             "urlCheck" : false,
-            "es6" : true
+            "es6" : true,
+            "minified" : true
         },
         "usingComponents" : true
     },
@@ -125,6 +126,11 @@
         "devServer" : {
             "disableHostCheck" : true
         },
-        "title" : "旋仔H5"
+        "title" : "旋仔H5",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        }
     }
 }

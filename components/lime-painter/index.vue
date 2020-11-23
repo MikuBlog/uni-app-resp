@@ -8,7 +8,7 @@ import { toPx, dataURItoBlob, base64ToPath, compareVersion} from './utils';
 import { Draw } from './draw';
 import { adaptor } from './canvas';
 export default {
-	// version: '1.5.8.1',
+	// version: '1.5.8.3',
 	name: 'l-painter',
 	props: {
 		board: Object,
@@ -16,16 +16,13 @@ export default {
 			type: String,
 			default: 'png'
 		},
-		maxDrawCount: {
-			type: Number,
-			default: 5
-		},
 		width: [Number, String],
 		height: [Number, String],
 		pixelRatio: Number,
 		customStyle: String,
 		isRenderImage: Boolean,
 		isBase64ToPath: Boolean,
+		isH5PathToBase64: Boolean,
 		type: {
 			type: String,
 			default: '2d',
@@ -33,7 +30,6 @@ export default {
 	},
 	data() {
 		return {
-			drawCount: 0,
 			// #ifndef MP-WEIXIN || MP-QQ 
 			canvasId: `l-painter_${this._uid}`,
 			// #endif
@@ -79,7 +75,6 @@ export default {
 			const {width: ow, height: oh} = old || {};
 			if(w !== ow || h !== oh) {
 				this.inited = false;
-				this.drawCount = 0;
 			}
 			this.render();
 		}, {
@@ -90,8 +85,7 @@ export default {
 	methods: {
 		render(args = {}) {
 			this.getContext().then(async (ctx) => {
-				await new Promise(resolve => this.$nextTick(resolve)) 
-				const { use2dCanvas, boardWidth, boardHeight, board, canvas, isBase64ToPath } = this;
+				const { use2dCanvas, boardWidth, boardHeight, board, canvas, isBase64ToPath, isH5PathToBase64 } = this;
 				if(!this.ctx) {
 					this.ctx = ctx
 				}
@@ -107,9 +101,10 @@ export default {
 				}
 				this.ctx.clearRect(0, 0, boardWidth, boardHeight);
 				if(!this.draw) {
-					this.draw = new Draw(this.ctx, canvas, use2dCanvas);
+					this.draw = new Draw(this.ctx, canvas, use2dCanvas, isH5PathToBase64);
 				} 
 				await this.draw.drawBoard(JSON.stringify(args) != '{}' ? args : board);
+				await new Promise(resolve => this.$nextTick(resolve)) 
 				if (!use2dCanvas) {
 					await this.canvasDraw(this.ctx);
 				}
@@ -117,14 +112,11 @@ export default {
 				if(this.isRenderImage) {
 					this.canvasToTempFilePath()
 					.then(async res => {
-						const isPass = await this.contrast(res.tempFilePath)
-						if(isPass) {
-							if(/^data:image\/(\w+);base64/.test(res.tempFilePath) && isBase64ToPath) {
-								const img = await base64ToPath(res.tempFilePath)
-								this.$emit('success', img)
-							} else {
-								this.$emit('success', res.tempFilePath)
-							}
+						if(/^data:image\/(\w+);base64/.test(res.tempFilePath) && isBase64ToPath) {
+							const img = await base64ToPath(res.tempFilePath)
+							this.$emit('success', img)
+						} else {
+							this.$emit('success', res.tempFilePath)
 						}
 					})
 					.catch(err => {
@@ -202,6 +194,42 @@ export default {
 				
 			});
 		},
+		saveImage() {
+			this.$showLoading({
+				title: "正在保存"
+			})
+			this.canvasToTempFilePath().then(res => {
+				uni.saveImageToPhotosAlbum({
+					filePath: res.tempFilePath,
+					success: res => {
+						this.$showToast({
+							title: "保存成功"
+						})
+					},
+					fail: e => {
+						this.$showModal({
+							title: "提示",
+							content: "需要您授权保存相册",
+							success: e => {
+								if(e.confirm) {
+									uni.openSetting({
+										success: e => {
+											console.log(e)
+										},
+										fail: e => {
+											console.log(e)
+										}
+									})
+								}
+							}
+						})
+					},
+					complete: () => {
+						this.$hideLoading()
+					}
+				});
+			})
+		},
 		canvasToTempFilePath(args = {}) {
 		  const {use2dCanvas, canvasId} = this
 		  return new Promise((resolve, reject) => {
@@ -231,58 +259,6 @@ export default {
 		    }
 		    uni.canvasToTempFilePath(copyArgs, this)
 		  })
-		},
-		// 微信小程序保存图片到相册
-		saveImage() {
-			this.$showLoading({
-				title: "正在保存"
-			})
-			this.canvasToTempFilePath().then(res => {
-				uni.saveImageToPhotosAlbum({
-					filePath: res.tempFilePath,
-					success: res => {
-						this.$showToast({
-							title: "保存成功"
-						})
-					},
-					fail: e => {
-						this.$showToast({
-							title: "保存失败"
-						})
-					},
-					complete: () => {
-						this.$hideLoading()
-					}
-				});
-			})
-		},
-		contrast(filePath) {
-			return new Promise((resolve, reject) => {
-				uni.getImageInfo({
-					src: filePath,
-					success: (res) => {
-						if(this.drawCount >  this.maxDrawCount) {
-							const error = `绘制了${this.maxDrawCount}次, 但结果还是不成功！`;
-							console.error(error);
-							this.$emit('fail', error)
-							resolve(false)
-							return
-						}
-						// 比较画板和生成图的宽度比例相符时才证明绘制成功，否则进行强制重绘制
-						if(Math.abs((res.width * this.boardHeight -  this.boardWidth * res.height) / (res.height * this.boardHeight)) < 0.01) {
-							resolve(true)
-						} else {
-							this.render()
-						}
-						this.drawCount++
-					},
-					fail: (err) => {
-						console.error(`getImageInfo:fail ${filePath} failed ${JSON.stringify(err)}`)
-						this.$emit('fail', `${JSON.stringify(err)}`)
-						resolve(true)
-					}
-				})
-			})
 		}
 	}
 };

@@ -1,12 +1,13 @@
-import { toPx, CHAR_WIDTH_SCALE_MAP, base64ToPath  } from './utils'
+import { toPx, CHAR_WIDTH_SCALE_MAP, base64ToPath, pathToBase64, isNumber  } from './utils'
 import { GD } from './gradient'
 let id = 0
 let cache = {}
 export class Draw {
-	constructor(context, canvas, use2dCanvas = false) {
+	constructor(context, canvas, use2dCanvas = false, isH5PathToBase64 = false) {
 		this.ctx = context
 		this.canvas = canvas || null
 		this.use2dCanvas = use2dCanvas
+		this.isH5PathToBase64 = isH5PathToBase64
 	}
 	roundRect(x, y, w, h, r, fill = false, stroke = false, ) {
 		if (r < 0) return
@@ -263,11 +264,11 @@ export class Draw {
 				height: h
 			} = box
 			ctx.save()
-			this.setTransform(box, style)
+			// this.setTransform(box, style)
 			this.setBackground(bg, w, h)
 			this.setShadow(style)
-			x = -w/2
-			y = -h/2
+			// x = -w/2
+			// y = -h/2
 			this.roundRect(x, y, w, h, borderRadius, true, false)
 			ctx.clip()
 			const _modeImage = (img) => {
@@ -322,8 +323,7 @@ export class Draw {
 				this.setBorder(box, style)
 				setTimeout(() => {
 					resolve(true)
-				}, 1000/30)
-				 
+				}, 150)
 			}
 			 _drawImage(img)
 		})
@@ -599,9 +599,9 @@ export class Draw {
 						let [t, r, b, l] = v
 						style[type] = {
 							[pre[0]]: t,
-							[pre[1]]: r || t,
-							[pre[2]]: b || t,
-							[pre[3]]: l || r
+							[pre[1]]: isNumber(r) ? r : t,
+							[pre[2]]: isNumber(b) ? b : t,
+							[pre[3]]: isNumber(l) ? l : r
 						}
 					}
 				} else {
@@ -794,7 +794,13 @@ export class Draw {
 		return new Promise(async (resolve, reject) => {
 			const base64Reg = /^data:image\/(\w+);base64/
 			const localReg = /^\.|^\/(?=[^\/])/;
-			// #ifndef MP-ALIPAY || MP-BAIDU
+			const networkReg = /^(http|\/\/)/
+			// #ifdef H5
+			if(networkReg.test(img) && this.isH5PathToBase64) {
+				img = await pathToBase64(img)
+			}
+			// #endif
+			// #ifndef MP-ALIPAY 
 			if(base64Reg.test(img)) {
 				if(!cache[img]) {
 					const imgName = img

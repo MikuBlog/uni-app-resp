@@ -1,4 +1,7 @@
-const screen = uni.getSystemInfoSync().windowWidth / 750
+const screen = uni.getSystemInfoSync().windowWidth / 750;
+export function isNumber(value) {
+	return /^-?\d+(\.\d+)?$/.test(value);
+}
 export function toPx(value, baseSize) {
 	// 如果是数字
 	if (typeof value === 'number') {
@@ -29,7 +32,6 @@ export function toPx(value, baseSize) {
 	}
 }
 
-
 // 计算版本
 export function compareVersion(v1, v2) {
   v1 = v1.split('.')
@@ -54,11 +56,6 @@ export function compareVersion(v1, v2) {
   return 0
 }
 
-
-export function isNumber(value) {
-	return /^-?\d+(\.\d+)?$/.test(value);
-}
-
 /** 从 0x20 开始到 0x80 的字符宽度数据 */
 export const CHAR_WIDTH_SCALE_MAP = [0.296, 0.313, 0.436, 0.638, 0.586, 0.89, 0.87, 0.256, 0.334, 0.334, 0.455, 0.742,
 	0.241, 0.433, 0.241, 0.427, 0.586, 0.586, 0.586, 0.586, 0.586, 0.586, 0.586, 0.586, 0.586, 0.586, 0.241, 0.241, 0.742,
@@ -67,45 +64,115 @@ export const CHAR_WIDTH_SCALE_MAP = [0.296, 0.313, 0.436, 0.638, 0.586, 0.89, 0.
 	0.448, 0.295, 0.553, 0.639, 0.501, 0.64, 0.567, 0.347, 0.64, 0.616, 0.266, 0.267, 0.544, 0.266, 0.937, 0.616, 0.636,
 	0.639, 0.64, 0.382, 0.463, 0.373, 0.616, 0.525, 0.79, 0.507, 0.529, 0.492, 0.334, 0.269, 0.334, 0.742, 0.296
 ];
+// #ifdef MP
+const prefix = () => {
+	// #ifdef MP-TOUTIAO
+	return tt
+	// #endif
+	// #ifdef MP-WEIXIN
+	return wx
+	// #endif
+	// #ifdef MP-BAIDU
+	return swan
+	// #endif
+	// #ifdef MP-ALIPAY
+	return my
+	// #endif
+	// #ifdef MP-QQ
+	return qq
+	// #endif
+	// #ifdef MP-360
+	return qh
+	// #endif
+}
+
+const base64ToArrayBuffer = (data) => {
+	/**
+	 * base64ToArrayBuffer
+	 * Base64Binary.decode(base64_string);  
+	 * Base64Binary.decodeArrayBuffer(base64_string); 
+	 */
+	const Base64Binary = {
+	  _keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+	  
+	  /* will return a  Uint8Array type */
+	  decodeArrayBuffer(input) {
+	    const bytes = (input.length/4) * 3;
+	    const ab = new ArrayBuffer(bytes);
+	    this.decode(input, ab);
+	    return ab;
+	  },
+	 
+	  removePaddingChars(input) {
+	    const lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
+	    if(lkey == 64){
+	      return input.substring(0,input.length - 1);
+	    }
+	    return input;
+	  },
+	 
+	  decode(input, arrayBuffer) {
+	    //get last chars to see if are valid
+	    input = this.removePaddingChars(input);
+	    input = this.removePaddingChars(input);
+	 
+	    const bytes = parseInt((input.length / 4) * 3, 10);
+	    
+	    let uarray;
+	    let chr1, chr2, chr3;
+	    let enc1, enc2, enc3, enc4;
+	    let i = 0;
+	    let j = 0;
+	    
+	    if (arrayBuffer)
+	      uarray = new Uint8Array(arrayBuffer);
+	    else
+	      uarray = new Uint8Array(bytes);
+	    
+	    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+	    
+	    for (i=0; i<bytes; i+=3) {  
+	      //get the 3 octects in 4 ascii chars
+	      enc1 = this._keyStr.indexOf(input.charAt(j++));
+	      enc2 = this._keyStr.indexOf(input.charAt(j++));
+	      enc3 = this._keyStr.indexOf(input.charAt(j++));
+	      enc4 = this._keyStr.indexOf(input.charAt(j++));
+	  
+	      chr1 = (enc1 << 2) | (enc2 >> 4);
+	      chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+	      chr3 = ((enc3 & 3) << 6) | enc4;
+	  
+	      uarray[i] = chr1;      
+	      if (enc3 != 64) uarray[i+1] = chr2;
+	      if (enc4 != 64) uarray[i+2] = chr3;
+	    }
+	    return uarray;  
+	  }
+	 }
+	return (uni.base64ToArrayBuffer && uni.base64ToArrayBuffer(data)) || Base64Binary.decodeArrayBuffer(data)
+}
+// #endif
 
 /**
  * base64转路径
  * @param {Object} base64
  */
 export function base64ToPath(base64) {
+	const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64) || [];
+	
 	return new Promise((resolve, reject) => {
 		// #ifdef MP
 		const fs = uni.getFileSystemManager()
+		
 		//自定义文件名
-		const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64) || [];
 		if (!format) {
 			console.error('ERROR_BASE64SRC_PARSE')
 			reject(new Error('ERROR_BASE64SRC_PARSE'))
 		}
 		const time = new Date().getTime();
-		// #ifdef MP-TOUTIAO
-		const filePath = `${tt.env.USER_DATA_PATH}/${time}.${format}`
-		// #endif
-		// #ifdef MP-WEIXIN
-		const filePath = `${wx.env.USER_DATA_PATH}/${time}.${format}`
-		// #endif
-		// #ifdef MP-BAIDU
-		// 不支持
-		// const filePath = `${swan.env.USER_DATA_PATH}/${time}.${format}`
-		// #endif
-		// #ifdef MP-ALIPAY
-		// 支付宝支持base64不需转
-		resolve(base64)
-		return
-		// const filePath = `${my.env.USER_DATA_PATH}/${time}.${format}`
-		// #endif
-		// #ifdef MP-QQ
-		const filePath = `${qq.env.USER_DATA_PATH}/${time}.${format}`
-		// #endif
-		// #ifdef MP-360
-		const filePath = `${qh.env.USER_DATA_PATH}/${time}.${format}`
-		// #endif
-		const buffer = uni.base64ToArrayBuffer(bodyData)
+		let pre = prefix()
+		const filePath = `${pre.env.USER_DATA_PATH}/${time}.${format}`
+		let buffer = base64ToArrayBuffer(bodyData)
 		fs.writeFile({
 			filePath,
 			data: buffer,
@@ -121,21 +188,23 @@ export function base64ToPath(base64) {
 		// #endif
 		
 		// #ifdef H5
-		let mimeString = base64.split(',')[0].split(':')[1].split(';')[0]; // mime类型
-		let byteString = atob(base64.split(',')[1]); //base64 解码
-		let arrayBuffer = new ArrayBuffer(byteString.length); //创建缓冲数组
-		let intArray = new Uint8Array(arrayBuffer); //创建视图
-		
+		// mime类型
+		let mimeString = base64.split(',')[0].split(':')[1].split(';')[0]; 
+		//base64 解码
+		let byteString = atob(base64.split(',')[1]); 
+		//创建缓冲数组
+		let arrayBuffer = new ArrayBuffer(byteString.length);
+		//创建视图
+		let intArray = new Uint8Array(arrayBuffer); 
 		for (let i = 0; i < byteString.length; i++) {
 			intArray[i] = byteString.charCodeAt(i);
 		}
 		resolve(URL.createObjectURL(new Blob([intArray], { type: mimeString })))
 		// #endif
+		
 		// #ifdef APP-PLUS
 		const bitmap = new plus.nativeObj.Bitmap('bitmap' + Date.now())
 		bitmap.loadBase64Data(base64, () => {
-			//自定义文件名
-			const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64) || [];
 			if (!format) {
 				console.error('ERROR_BASE64SRC_PARSE')
 				reject(new Error('ERROR_BASE64SRC_PARSE'))
@@ -159,25 +228,13 @@ export function base64ToPath(base64) {
 			reject(error)
 		})
 		// #endif
-		
 	})
 }
-
 
 export function pathToBase64(path) {
 	return new Promise((resolve, reject) => {
 		// #ifdef H5
-		if(/^blob/.test(path) && typeof FileReader === 'function') {
-			const fileReader = new FileReader();
-			fileReader.onload = (e) => {
-			    resolve(e.target.result);
-			};
-			fileReader.readAsDataURL(path);
-			fileReader.onerror = (error) => {
-				console.error('blobToBase64 error:', JSON.stringify(error))
-			    reject(new Error('blobToBase64 error'));
-			};
-		} else {
+		const _canvas = ()=> {
 			let image = new Image();
 			image.onload = () => {
 				let canvas = document.createElement('canvas');
@@ -197,6 +254,31 @@ export function pathToBase64(path) {
 				console.error('urlToBase64 error:', JSON.stringify(error))
 			    reject(new Error('urlToBase64 error'));
 			};
+		}
+		if( typeof FileReader === 'function' ) {
+			window.URL = window.URL || window.webkitURL;
+			const xhr = new XMLHttpRequest();
+			xhr.open("get", path, true);
+			xhr.responseType = "blob";
+			xhr.onload = function() {
+				if(this.status == 200) {
+					let blob = this.response;
+					const fileReader = new FileReader();
+					fileReader.onload = (e) => {
+					    resolve(e.target.result);
+					};
+					fileReader.readAsDataURL(blob);
+					fileReader.onerror = (error) => {
+						console.error('blobToBase64 error:', JSON.stringify(error))
+					    reject(new Error('blobToBase64 error'));
+					};
+				} else {
+					_canvas()
+				}
+			}
+			xhr.send();
+		} else {
+			_canvas()
 		}
 		// #endif
 		
@@ -237,12 +319,11 @@ export function pathToBase64(path) {
 		    reject(error)
 		})
 		// #endif
-		reject(new Error('not support'))
 	})
 }
 
 // #ifdef APP-PLUS
-function getLocalFilePath(path) {
+const getLocalFilePath = (path)=> {
     if (path.indexOf('_www') === 0 || path.indexOf('_doc') === 0 || path.indexOf('_documents') === 0 || path.indexOf('_downloads') === 0) {
         return path
     }
@@ -253,7 +334,7 @@ function getLocalFilePath(path) {
         return path
     }
     if (path.indexOf('/') === 0) {
-        var localFilePath = plus.io.convertAbsoluteFileSystem(path)
+        const localFilePath = plus.io.convertAbsoluteFileSystem(path)
         if (localFilePath !== path) {
             return localFilePath
         } else {
@@ -263,3 +344,4 @@ function getLocalFilePath(path) {
     return '_www/' + path
 }
 // #endif
+
