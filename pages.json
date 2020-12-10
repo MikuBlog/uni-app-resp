@@ -1,5 +1,20 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		// #ifdef H5
+		// {
+		// 	"path": "pages/redirect/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "首页",
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/h5_login/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "登录"
+		// 	}
+		// },
+		// #endif
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -8,28 +23,13 @@
 				// "enablePullDownRefresh": true 是否下拉刷新
 			}
 		},
-		// #ifdef H5
-		{
-			"path": "pages/redirect/index",
-			"style": {
-				"navigationBarTitleText": "首页",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/h5_login/index",
-			"style": {
-				"navigationBarTitleText": "登录"
-			}
-		}
-		// #endif
 		// #ifdef MP-WEIXIN
 		{
 			"path": "pages/wx_login/index",
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
-		},
+		}
 		// #endif
 	],
 	"tabBar": {

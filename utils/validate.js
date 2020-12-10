@@ -23,7 +23,7 @@ export function isMobile(s) {
  * @description 验证是否为身份证号码
  * @param {String} s
  */
-export function isId(e) {
+export function isId(s) {
 	return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(s)
 }
 /**

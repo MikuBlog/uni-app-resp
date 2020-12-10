@@ -88,6 +88,13 @@ import rotateImage from '@/api/file/rotate_image'
 Vue.prototype.$rotateImage = rotateImage
 // #endif
 
+// #ifndef H5
+// 获取位置信息与当前位置
+import Location from '@/api/location/index'
+Vue.prototype.$getLocation = Location.getLocation
+Vue.prototype.$getAddress = Location.getAddress
+// #endif
+
 // 复制内容
 import copy from '@/api/other/copy'
 Vue.prototype.$copyText = copy
