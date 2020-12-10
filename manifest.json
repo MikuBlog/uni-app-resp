@@ -107,7 +107,12 @@
             "es6" : true,
             "minified" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的信息将用于小程序位置接口的效果展示"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true
