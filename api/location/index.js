@@ -1,28 +1,48 @@
 import QQMapWX from "@/utils/qqmap-wx-jssdk.min"
 
-function getLocation() {
+function getLocation(address) {
 	return new Promise((resolve, reject) => {
-		uni.getLocation({
-			type: 'gcj02', //返回可以用于uni.openLocation的经纬度
-			success: res => {
-				resolve({
-					latitude: res.latitude, 
-					longitude: res.longitude
-				})
-			},
-			fail: e => {
-				uni.showModal({
-					title: "提示",
-					content: "需要您授权开启定位",
-					success: e => {
-						if(e.confirm) {
-							uni.openSetting()
+		if(!address) {
+			uni.getLocation({
+				type: 'gcj02', //返回可以用于uni.openLocation的经纬度
+				success: res => {
+					resolve({
+						latitude: res.latitude, 
+						longitude: res.longitude
+					})
+				},
+				fail: e => {
+					uni.showModal({
+						title: "提示",
+						content: "需要您授权开启定位",
+						success: e => {
+							if(e.confirm) {
+								uni.openSetting()
+							}
 						}
-					}
-				})
-				reject(e)
-			}
-		});
+					})
+					reject(e)
+				}
+			});
+		}	else {
+			let qqMap = new QQMapWX({
+			  key: 'WASBZ-RFV3D-BQI44-HWJRZ-ZVGY6-3OFRK' // 必填
+			})
+			qqMap.geocoder({
+			  address,
+			  complete: res => {
+			    if (res.status === 0) {
+						const data = res.result.location
+						resolve({
+							latitude: data.lat,
+							longitude: data.lng
+						})
+			    } else {
+						reject(res.message)
+			    }
+			  }
+			})
+		}
 	})
 }
 
