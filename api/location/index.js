@@ -1,4 +1,5 @@
 import QQMapWX from "@/utils/qqmap-wx-jssdk.min"
+import { qqKey } from '@/global/js/baseUrl'
 
 function getLocation(address) {
 	return new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ function getLocation(address) {
 			});
 		}	else {
 			let qqMap = new QQMapWX({
-			  key: 'WASBZ-RFV3D-BQI44-HWJRZ-ZVGY6-3OFRK' // 必填
+			  key: qqKey // 必填
 			})
 			qqMap.geocoder({
 			  address,
@@ -51,7 +52,7 @@ function getAddress(latitude, longitude) {
 		uni.request({
 			url: 'http://apis.map.qq.com/ws/geocoder/v1/',
 			data: {
-				key: "WASBZ-RFV3D-BQI44-HWJRZ-ZVGY6-3OFRK",
+				key: qqKey,
 				location: `${latitude},${longitude}`
 			},
 			method: "get",
