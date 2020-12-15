@@ -1,4 +1,6 @@
 const screen = uni.getSystemInfoSync().windowWidth / 750;
+// 缓存图片
+let cache = {}
 export function isNumber(value) {
 	return /^-?\d+(\.\d+)?$/.test(value);
 }
@@ -13,7 +15,7 @@ export function toPx(value, baseSize) {
 	}
 	// 如果有单位
 	if (typeof value === 'string') {
-		const reg = /^-?[0-9]+([.]{1}[0-9]+){0,1}(rpx|px|%)$/g
+		const reg = /^-?[0-9]+([.]{1}[0-9]+){0,1}(em|rpx|px|%)$/g
 		const results = reg.exec(value);
 		if (!value || !results) {
 			return 0;
@@ -27,6 +29,8 @@ export function toPx(value, baseSize) {
 			res = Math.floor(value * 1);
 		} else if (unit === '%') {
 			res = Math.floor(value * toPx(baseSize) / 100);
+		} else if (unit === 'em') {
+			res = Math.ceil(value * toPx(baseSize || 14));
 		}
 		return res;
 	}
@@ -231,12 +235,17 @@ export function base64ToPath(base64) {
 	})
 }
 
+/**
+ * 路径转base64
+ * @param {Object} string
+ */
+
 export function pathToBase64(path) {
 	return new Promise((resolve, reject) => {
 		// #ifdef H5
 		const _canvas = ()=> {
 			let image = new Image();
-			image.onload = () => {
+			image.onload = function() {
 				let canvas = document.createElement('canvas');
 				// 获取图片原始宽高
 				canvas.width = this.naturalWidth;
@@ -247,36 +256,47 @@ export function pathToBase64(path) {
 				resolve(result);
 				canvas.height = canvas.width = 0
 			}
+			image.src = path
 			image.setAttribute("crossOrigin",'Anonymous');
 			image.src = path;
-			// 图片加载失败的错误处理
 			image.onerror = (error) => {
-				console.error('urlToBase64 error:', JSON.stringify(error))
+				console.error(`urlToBase64 error: ${path}`, JSON.stringify(error))
 			    reject(new Error('urlToBase64 error'));
 			};
 		}
-		if( typeof FileReader === 'function' ) {
+		const _fileReader = (blob) => {
+			const fileReader = new FileReader();
+			fileReader.onload = (e) => {
+			    resolve(e.target.result);
+			};
+			fileReader.readAsDataURL(blob);
+			fileReader.onerror = (error) => {
+				console.error('blobToBase64 error:', JSON.stringify(error))
+			    reject(new Error('blobToBase64 error'));
+			};
+		}
+		const isFileReader = typeof FileReader === 'function'
+		if(/^(http|\/\/)/.test(path) && isFileReader ) {
 			window.URL = window.URL || window.webkitURL;
 			const xhr = new XMLHttpRequest();
 			xhr.open("get", path, true);
+			xhr.timeout = 2000;
 			xhr.responseType = "blob";
 			xhr.onload = function() {
 				if(this.status == 200) {
-					let blob = this.response;
-					const fileReader = new FileReader();
-					fileReader.onload = (e) => {
-					    resolve(e.target.result);
-					};
-					fileReader.readAsDataURL(blob);
-					fileReader.onerror = (error) => {
-						console.error('blobToBase64 error:', JSON.stringify(error))
-					    reject(new Error('blobToBase64 error'));
-					};
+					_fileReader(this.response)
 				} else {
 					_canvas()
 				}
 			}
+			xhr.onreadystatechange = function() {
+				if(this.status === 0) {
+					_canvas()
+				}
+			}
 			xhr.send();
+		} else if(/^blob/.test(path) && isFileReader){
+			_fileReader(path)
 		} else {
 			_canvas()
 		}
@@ -345,3 +365,45 @@ const getLocalFilePath = (path)=> {
 }
 // #endif
 
+export function getImageInfo(img, isH5PathToBase64) {
+		return new Promise(async (resolve, reject) => {
+			const base64Reg = /^data:image\/(\w+);base64/
+			const localReg = /^\.|^\/(?=[^\/])/;
+			const networkReg = /^(http|\/\/)/
+			// #ifdef H5
+			if(networkReg.test(img) && isH5PathToBase64) {
+				img = await pathToBase64(img)
+			}
+			// #endif
+			// #ifndef MP-ALIPAY 
+			if(base64Reg.test(img)) {
+				if(!cache[img]) {
+					const imgName = img
+					img = await base64ToPath(img)
+					cache[imgName] = img
+				} else {
+					img = cache[img]
+				}
+			}
+			// #endif
+			if(cache[img] && cache[img].errMsg) {
+				resolve(cache[img])
+			} else {
+				uni.getImageInfo({
+					src: img,
+					success: (image) => {
+						// #ifdef MP-WEIXIN || MP-BAIDU || MP-QQ || MP-TOUTIAO
+						image.path = localReg.test(img) ?  `/${image.path}` : image.path;
+						// #endif
+						// image.path = /^(http|\/\/|\/|wxfile|data:image\/(\w+);base64|file|bdfile|ttfile|blob)/.test(image.path) ? image.path : `/${image.path}`;
+						cache[img] = image
+						resolve(cache[img])
+					},
+					fail(err) {
+						resolve({path: img})
+						console.error(`getImageInfo:fail ${img} failed ${JSON.stringify(err)}`);
+					}
+				})
+			}
+		})
+	}

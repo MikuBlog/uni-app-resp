@@ -1,5 +1,4 @@
 export function adaptor(ctx) {
-	// @ts-ignore
 	return Object.assign(ctx, {
 		setStrokeStyle(val) {
 			ctx.strokeStyle = val;
