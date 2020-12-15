@@ -5,7 +5,7 @@ export const prefixUrl = "http://xuanzai.vipgz4.idcfengye.com"
 // 图片cdn地址前缀
 export const cdnUrl = "http://xuanzai.vipgz4.idcfengye.com"
 // 缺省占位图
-export const thumb = "https://myinterface.xuanzai.top/getPicture?type=error"
+export const thumb = require('@/static/thumb.png')
 // appid
 export const appid = "wx778b0ce131bb9a03"
 // #ifdef H5
