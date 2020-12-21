@@ -11,6 +11,6 @@ export default (url) => {
   if (regexp.test(url)) {
     return url
   } else {
-    return `${prefixUrl}${url.replace(/\\/g, '/')}`
+    return `${prefixUrl}${url.replace(/\\/g, '/').replace(/[ ]/g, '%20')}`
   }
 }

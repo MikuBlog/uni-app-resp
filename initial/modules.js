@@ -8,6 +8,20 @@ import Http from '@/api/http/h5'
 import Http from '@/api/http/wx'
 // #endif
 
+// #ifndef H5
+// 引入二次封装的axios模块
+import Bluetooth from '@/api/bluetooth/index'
+Vue.prototype.$connectBle = Bluetooth.connectBle
+Vue.prototype.$openBluetoothAdapter = Bluetooth.openBluetoothAdapter
+Vue.prototype.$startBluetoothDeviceDiscovery = Bluetooth.startBluetoothDeviceDiscovery
+Vue.prototype.$getBluetoothServices = Bluetooth.getBluetoothServices
+Vue.prototype.$getBluetoothCharacteristics = Bluetooth.getBluetoothCharacteristics
+Vue.prototype.$strToBuffer = Bluetooth.strToBuffer
+Vue.prototype.$sendServiceMsg = Bluetooth.sendServiceMsg
+Vue.prototype.$getServiceMsg = Bluetooth.getServiceMsg
+Vue.prototype.$stopService = Bluetooth.stopService
+// #endif
+
 Vue.prototype.$http_normal = Http.http_normal
 Vue.prototype.$http_json = Http.http_json
 Vue.prototype.$http_file = Http.http_file
