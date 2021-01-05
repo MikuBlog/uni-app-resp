@@ -1,7 +1,7 @@
 // 接口请求地址前缀
-export const baseUrl = "http://xuanzai.vipgz4.idcfengye.com"
+export const baseUrl = "http://doctorforumapi.whalenect.com"
 // 静态资源请求地址前缀
-export const prefixUrl = "http://xuanzai.vipgz4.idcfengye.com"
+export const prefixUrl = "http://doctorforumapi.whalenect.com"
 // 图片cdn地址前缀
 export const cdnUrl = "http://xuanzai.vipgz4.idcfengye.com"
 // 缺省占位图
@@ -19,6 +19,6 @@ export const envVersion = __wxConfig.envVersion
 // 语言
 export const language = 'zh-cn'
 // 测试token
-export const token = "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyIiwic3ViIjoiYWRtaW4iLCJpYXQiOjE1OTYwMTM3ODEsImF1dGgiOiJBRE1JTiIsImV4cCI6MTU5NjYxODU4MX0.3_Rcmv-bvjBh7Tqjuf2Eu9mexkRDK87n6TXwDEr3-69QctRUsbS6ZswonsuqFwhBM1VtKIxSdazwl2eMY-XxfQ"
+export const token = "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI1NCIsInN1YiI6Im9LekREczQzbUxWaXlLcHhXdWJxUVIwOXpoZkkiLCJpYXQiOjE2MDkxMzk1NDEsImF1dGgiOiJUUE9TVDplZGl0LFRQT1NUOmFsbCxUUE9TVDphZGQsUk9MRVM6bGlzdCxET0NUT1I6bGlzdCxIT1RXT1JEOmxpc3QsUExBVEZPUk1JTkZPUk1BVElPTjpsaXN0LFRJTkZPUk1BVElPTjpsaXN0LERPQ1RPUjphZGQsVFBPU1RUWVBFOmxpc3QsSU5GT0ZFRURCQUNLOmFkZCxXWFVTRVI6YWRkLFdYVVNFUjphbGwsVVNFUjpsaXN0LENBUk9VU0VMOmxpc3QsV1hVU0VSOmVkaXQsVFBPU1Q6ZGVsLElORk9GRUVEQkFDSzpsaXN0LFRQT1NUOmxpc3QsV1hVU0VSOmxpc3QsV1hVU0VSOmRlbCJ9.3qQs77e_v3BoPH8VhD3KYRu16gux6mPUNc2gB8hAl_tQ3UsjKFAoyyDrFjyOf-JvMBG9x_N9tu1cspND78TrKA"
 // 腾讯地图key值
 export const qqKey = 'WASBZ-RFV3D-BQI44-HWJRZ-ZVGY6-3OFRK'

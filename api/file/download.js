@@ -1,3 +1,6 @@
+import {
+	isWeixin
+} from '@/utils/system.js'
 /**
  * @author xuanzai
  * @description 下载文件
@@ -13,23 +16,29 @@ function download(options) {
 	isLoading && uni.showLoading({
 		title: "下载中"
 	})
+	// #ifdef H5
+	if (isWeixin()) {
+		uni.showModal({
+			title: "温馨提示",
+			content: "请点击右上角使用其他浏览器打开当前网页并下载App"
+		})
+	} else {
+		const
+			a = document.createElement('a'),
+			arr = url.split('/')
+		a.download = fileName || arr[arr.length - 1]
+		a.href = url
+		a.click()
+	}
+	// #endif
+	// #ifndef H5
 	return uni.downloadFile({
 		url,
-		success: (res) => {
+		success: res => {
 			if (res.statusCode === 200) {
-				// #ifndef H5
 				uni.saveFile({
 					tempFilePath: res.tempFilePath
 				});
-				// #endif
-				// #ifdef H5
-				const
-					a = document.createElement('a'),
-					arr = url.split('/')
-				a.download = fileName || arr[arr.length - 1]
-				a.href = res.tempFilePath
-				a.click()
-				// #endif
 			}
 		},
 		fail: e => {
@@ -42,6 +51,7 @@ function download(options) {
 			uni.hideLoading()
 		}
 	});
+	// #endif
 }
 
 export default download

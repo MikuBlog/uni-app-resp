@@ -2,7 +2,7 @@
  * @author xuanzai
  * @description h5专用axios封装模块
  */
-import { baseUrl } from '@/global/js/baseUrl.js'
+import { baseUrl, token } from '@/global/js/baseUrl.js'
 import store from '@/store/index.js'
 import axios from 'axios'
 
@@ -32,7 +32,7 @@ function addInterceptors(obj, isLoading = true) {
 			loading = config.loading !== undefined
 			? config.loading
 			: true
-			// uni.setStorageSync('token', token)
+			uni.setStorageSync('token', token)
 			uni.getStorageSync('token')
 			&& (config.headers.Authorization = `Bearer ${uni.getStorageSync('token')}`)
 			&& (new RegExp(/\/auth\/login/g).test(config.url) || new RegExp(/\/auth\/loginWx/g).test(config.url) || new RegExp(/\/auth\/loginPh/g).test(config.url))

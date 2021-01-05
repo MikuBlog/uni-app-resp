@@ -14,8 +14,8 @@ function getLocation(address) {
 				},
 				fail: e => {
 					uni.showModal({
-						title: "提示",
-						content: "需要您授权开启定位",
+						title: "授权定位失败",
+						content: "需要您授权开启定位。如果系统定位服务被禁用，则请在系统设置中打开定位服务",
 						success: e => {
 							if(e.confirm) {
 								uni.openSetting()
@@ -50,7 +50,7 @@ function getLocation(address) {
 function getAddress(latitude, longitude) {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: 'http://apis.map.qq.com/ws/geocoder/v1/',
+			url: 'https://apis.map.qq.com/ws/geocoder/v1/',
 			data: {
 				key: qqKey,
 				location: `${latitude},${longitude}`

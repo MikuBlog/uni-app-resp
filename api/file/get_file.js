@@ -5,15 +5,21 @@
  * @param {Number} count 文件总数，默认为三个
  * @returns {Promise}
  */
-function getFile(limit = 10, count = 3) {
+function getFile(limit = 10, count = 3, type = "") {
 	return new Promise((resolve, reject) => {
 		let
 			fileEle = document.createElement('input'),
 			event = new MouseEvent('click')
 		fileEle.type = "file"
-		count > 1 && (fileEle.multiple = 'multiple')
+		fileEle.accept = type || ''
+		if(type.indexOf('video') !== -1) {
+			fileEle.capture = 'camcorder'
+		}
+		// fileEle.multiple = false
+		// count > 1 && (fileEle.multiple = 'multiple')
 		fileEle.style.display = 'none'
 		fileEle.addEventListener('change', () => {
+			console.log(fileEle.files)
 			const fileList = fileEle.files
 			let size = 0, arr = []
 			arr.forEach.call(fileList, val => {

@@ -120,3 +120,8 @@ Vue.prototype.$getImgFile = imageFile.getImgFile
 // 下载文件
 import download from '@/api/file/download'
 Vue.prototype.$download = download
+
+// #ifdef H5
+import VConsole from 'vconsole';
+let vConsole = new VConsole();
+// #endif

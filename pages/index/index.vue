@@ -1,9 +1,9 @@
 <template>
 	<view class="content">
-		<view @click="downloadImage">
+		<view @click="uploadVideo">
 			点击下载海报图片
 		</view>
-		<image :src="img" mode="widthFix"></image>
+		<!-- <image :src="img" mode="widthFix"></image> -->
 	</view>
 </template>
 
