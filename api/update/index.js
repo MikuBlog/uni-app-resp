@@ -822,6 +822,7 @@ function downloadPopup(data) {
 	return callbackData;
 }
 export const appUpdate = function(isPrompt = false) {
+	uni.removeStorageSync('closeTime')
 	getCurrentNo(versionInfo => {
 		getServerNo(versionInfo, isPrompt, res => {
 			if (isPrompt) return;
