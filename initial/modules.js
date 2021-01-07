@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import globalConfig from '@/global/js/config' 
 // #ifdef H5
 // 引入二次封装的axios模块
 import Http from '@/api/http/h5'
@@ -116,12 +117,24 @@ Vue.prototype.$copyText = copy
 // 获取图片信息
 import imageFile from '@/api/file/get_file_image'
 Vue.prototype.$getImgFile = imageFile.getImgFile
+// #ifdef H5
+// 压缩图片
+Vue.prototype.$compressImageFile = imageFile.compressImageFile
+// #endif
 
 // 下载文件
 import download from '@/api/file/download'
 Vue.prototype.$download = download
 
+// #ifdef APP-PLUS
+import { appUpdate, getCurrentNo } from '@/api/update/index'
+// app更新
+Vue.prototype.$appUpdate = appUpdate
+// 检查app版本
+Vue.prototype.$getCurrentNo = getCurrentNo
+// #endif
+
 // #ifdef H5
 import VConsole from 'vconsole';
-let vConsole = new VConsole();
+globalConfig.isDebug && new VConsole();
 // #endif

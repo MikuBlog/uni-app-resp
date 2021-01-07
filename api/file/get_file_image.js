@@ -1,3 +1,6 @@
+// #ifdef H5
+import lrz from "lrz";
+// #endif
 /**
  * @author xuanzai
  * @description 选择文件获取图片url
@@ -64,6 +67,34 @@ function getImgFile(limit = 10, count = 3) {
 	})
 	// #endif
 }
+
+/**
+ * @author wenfeng
+ * @description 压缩图片文件
+ * @param {File} file 
+ * @param {Number} quality 压缩质量 范围:(0-1]
+ * @returns {Promise}
+ */
+// #ifdef H5
+function compressImageFile(file, quality = 0.7) {
+    return new Promise((resolve, reject) => {
+        lrz(file, {
+                quality
+            }).then(function (rst) {
+                // 处理成功会执行
+                let newFile = new File([rst.file], rst.origin.name, {
+                    type: rst.origin.type
+                })
+                resolve(newFile)
+            })
+            .catch(function (err) {
+                // 处理失败会执行
+                reject(err)
+            })
+
+    })
+}
+// #endif
 
 /**
  * @description 获取图片的base64
@@ -139,6 +170,7 @@ function downloadBase64Image(base64) {
 export default {
 	getImgFile,
 	// #ifdef H5
+	compressImageFile,
 	getBase64Image,
 	openPictureBase64,
 	dataUrlToBlob,

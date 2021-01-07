@@ -49,6 +49,9 @@
 	// #ifndef H5
 	export default {
 		onLaunch: function() {
+			// #ifdef APP-PLUS
+			config.isUpdateImmediate && this.$appUpdate();
+			// #endif
 			console.log('App Launch')
 		},
 		onShow: function() {
