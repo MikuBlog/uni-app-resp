@@ -27,3 +27,6 @@ button {
 .uni-list-item__container {
 	padding: 26upx 10upx !important;
 }
+button::after {
+	border: none;
+}
