@@ -13,9 +13,6 @@ function download(options) {
 		fileName,
 		isLoading
 	} = options
-	isLoading && uni.showLoading({
-		title: "下载中"
-	})
 	// #ifdef H5
 	if (isWeixin()) {
 		uni.showModal({
@@ -32,6 +29,9 @@ function download(options) {
 	}
 	// #endif
 	// #ifndef H5
+	isLoading && uni.showLoading({
+		title: "下载中"
+	})
 	return uni.downloadFile({
 		url,
 		success: res => {
